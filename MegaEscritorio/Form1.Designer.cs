@@ -28,12 +28,276 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.m_width = new System.Windows.Forms.TextBox();
+            this.m_depth = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.drawers = new System.Windows.Forms.NumericUpDown();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.standard = new System.Windows.Forms.RadioButton();
+            this.day3 = new System.Windows.Forms.RadioButton();
+            this.day5 = new System.Windows.Forms.RadioButton();
+            this.day7 = new System.Windows.Forms.RadioButton();
+            this.oak = new System.Windows.Forms.RadioButton();
+            this.laminate = new System.Windows.Forms.RadioButton();
+            this.pine = new System.Windows.Forms.RadioButton();
+            this.Material = new System.Windows.Forms.GroupBox();
+            this.Shipping = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.drawers)).BeginInit();
+            this.Material.SuspendLayout();
+            this.Shipping.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(91, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Width";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(90, 57);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(36, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Depth";
+            // 
+            // m_width
+            // 
+            this.m_width.Location = new System.Drawing.Point(132, 23);
+            this.m_width.Name = "m_width";
+            this.m_width.Size = new System.Drawing.Size(98, 20);
+            this.m_width.TabIndex = 1;
+            this.m_width.Text = "10";
+            this.m_width.TextChanged += new System.EventHandler(this.ValidateWidth);
+            // 
+            // m_depth
+            // 
+            this.m_depth.Location = new System.Drawing.Point(132, 54);
+            this.m_depth.Name = "m_depth";
+            this.m_depth.Size = new System.Drawing.Size(98, 20);
+            this.m_depth.TabIndex = 2;
+            this.m_depth.Text = "10";
+            this.m_depth.TextChanged += new System.EventHandler(this.ValidateDepth);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(47, 161);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(96, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Number of drawers";
+            // 
+            // drawers
+            // 
+            this.drawers.Location = new System.Drawing.Point(164, 159);
+            this.drawers.Maximum = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            this.drawers.Name = "drawers";
+            this.drawers.Size = new System.Drawing.Size(113, 20);
+            this.drawers.TabIndex = 7;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(38, 356);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 36);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "Get quote";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(172, 356);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(99, 36);
+            this.button2.TabIndex = 14;
+            this.button2.Text = "Cancel";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // standard
+            // 
+            this.standard.AutoSize = true;
+            this.standard.Checked = true;
+            this.standard.Location = new System.Drawing.Point(8, 29);
+            this.standard.Name = "standard";
+            this.standard.Size = new System.Drawing.Size(68, 17);
+            this.standard.TabIndex = 9;
+            this.standard.TabStop = true;
+            this.standard.Text = "Standard";
+            this.standard.UseVisualStyleBackColor = true;
+            // 
+            // day3
+            // 
+            this.day3.AutoSize = true;
+            this.day3.Location = new System.Drawing.Point(109, 29);
+            this.day3.Name = "day3";
+            this.day3.Size = new System.Drawing.Size(56, 17);
+            this.day3.TabIndex = 10;
+            this.day3.TabStop = true;
+            this.day3.Text = "3 days";
+            this.day3.UseVisualStyleBackColor = true;
+            // 
+            // day5
+            // 
+            this.day5.AutoSize = true;
+            this.day5.Location = new System.Drawing.Point(109, 61);
+            this.day5.Name = "day5";
+            this.day5.Size = new System.Drawing.Size(56, 17);
+            this.day5.TabIndex = 12;
+            this.day5.TabStop = true;
+            this.day5.Text = "5 days";
+            this.day5.UseVisualStyleBackColor = true;
+            // 
+            // day7
+            // 
+            this.day7.AutoSize = true;
+            this.day7.Location = new System.Drawing.Point(7, 61);
+            this.day7.Name = "day7";
+            this.day7.Size = new System.Drawing.Size(56, 17);
+            this.day7.TabIndex = 11;
+            this.day7.TabStop = true;
+            this.day7.Text = "7 days";
+            this.day7.UseVisualStyleBackColor = true;
+            // 
+            // oak
+            // 
+            this.oak.AutoSize = true;
+            this.oak.Location = new System.Drawing.Point(13, 19);
+            this.oak.Name = "oak";
+            this.oak.Size = new System.Drawing.Size(45, 17);
+            this.oak.TabIndex = 4;
+            this.oak.TabStop = true;
+            this.oak.Text = "Oak";
+            this.oak.UseVisualStyleBackColor = true;
+            // 
+            // laminate
+            // 
+            this.laminate.AutoSize = true;
+            this.laminate.Location = new System.Drawing.Point(165, 19);
+            this.laminate.Name = "laminate";
+            this.laminate.Size = new System.Drawing.Size(68, 17);
+            this.laminate.TabIndex = 6;
+            this.laminate.TabStop = true;
+            this.laminate.Text = "Laminate";
+            this.laminate.UseVisualStyleBackColor = true;
+            // 
+            // pine
+            // 
+            this.pine.AutoSize = true;
+            this.pine.Location = new System.Drawing.Point(89, 19);
+            this.pine.Name = "pine";
+            this.pine.Size = new System.Drawing.Size(46, 17);
+            this.pine.TabIndex = 5;
+            this.pine.TabStop = true;
+            this.pine.Text = "Pine";
+            this.pine.UseVisualStyleBackColor = true;
+            // 
+            // Material
+            // 
+            this.Material.Controls.Add(this.pine);
+            this.Material.Controls.Add(this.oak);
+            this.Material.Controls.Add(this.laminate);
+            this.Material.Location = new System.Drawing.Point(38, 88);
+            this.Material.Name = "Material";
+            this.Material.Size = new System.Drawing.Size(239, 60);
+            this.Material.TabIndex = 3;
+            this.Material.TabStop = false;
+            this.Material.Text = "Material";
+            // 
+            // Shipping
+            // 
+            this.Shipping.Controls.Add(this.day7);
+            this.Shipping.Controls.Add(this.day5);
+            this.Shipping.Controls.Add(this.day3);
+            this.Shipping.Controls.Add(this.standard);
+            this.Shipping.Location = new System.Drawing.Point(63, 196);
+            this.Shipping.Name = "Shipping";
+            this.Shipping.Size = new System.Drawing.Size(171, 99);
+            this.Shipping.TabIndex = 8;
+            this.Shipping.TabStop = false;
+            this.Shipping.Text = "Shipping";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(236, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(15, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "in";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(236, 57);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(15, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "in";
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(322, 404);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.Shipping);
+            this.Controls.Add(this.Material);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.drawers);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.m_depth);
+            this.Controls.Add(this.m_width);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Name = "Form1";
+            this.Text = "Mega Escritorio - Carlos Ortiz";
+            ((System.ComponentModel.ISupportInitialize)(this.drawers)).EndInit();
+            this.Material.ResumeLayout(false);
+            this.Material.PerformLayout();
+            this.Shipping.ResumeLayout(false);
+            this.Shipping.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox m_width;
+        private System.Windows.Forms.TextBox m_depth;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown drawers;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.RadioButton standard;
+        private System.Windows.Forms.RadioButton day3;
+        private System.Windows.Forms.RadioButton day5;
+        private System.Windows.Forms.RadioButton day7;
+        private System.Windows.Forms.RadioButton oak;
+        private System.Windows.Forms.RadioButton laminate;
+        private System.Windows.Forms.RadioButton pine;
+        private System.Windows.Forms.GroupBox Material;
+        private System.Windows.Forms.GroupBox Shipping;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
     }
 }
 
