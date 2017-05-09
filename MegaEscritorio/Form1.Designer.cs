@@ -47,6 +47,9 @@
             this.Shipping = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.quoteBox = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.drawers)).BeginInit();
             this.Material.SuspendLayout();
             this.Shipping.SuspendLayout();
@@ -108,24 +111,27 @@
             this.drawers.Name = "drawers";
             this.drawers.Size = new System.Drawing.Size(113, 20);
             this.drawers.TabIndex = 7;
+            this.drawers.ValueChanged += new System.EventHandler(this.drawers_ValueChanged);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(38, 356);
+            this.button1.Location = new System.Drawing.Point(12, 356);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 36);
+            this.button1.Size = new System.Drawing.Size(84, 36);
             this.button1.TabIndex = 13;
             this.button1.Text = "Get quote";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(172, 356);
+            this.button2.Location = new System.Drawing.Point(230, 356);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(99, 36);
+            this.button2.Size = new System.Drawing.Size(80, 36);
             this.button2.TabIndex = 14;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // standard
             // 
@@ -138,6 +144,7 @@
             this.standard.TabStop = true;
             this.standard.Text = "Standard";
             this.standard.UseVisualStyleBackColor = true;
+            this.standard.CheckedChanged += new System.EventHandler(this.standard_CheckedChanged);
             // 
             // day3
             // 
@@ -149,6 +156,7 @@
             this.day3.TabStop = true;
             this.day3.Text = "3 days";
             this.day3.UseVisualStyleBackColor = true;
+            this.day3.CheckedChanged += new System.EventHandler(this.day3_CheckedChanged);
             // 
             // day5
             // 
@@ -160,6 +168,7 @@
             this.day5.TabStop = true;
             this.day5.Text = "5 days";
             this.day5.UseVisualStyleBackColor = true;
+            this.day5.CheckedChanged += new System.EventHandler(this.day5_CheckedChanged);
             // 
             // day7
             // 
@@ -171,10 +180,12 @@
             this.day7.TabStop = true;
             this.day7.Text = "7 days";
             this.day7.UseVisualStyleBackColor = true;
+            this.day7.CheckedChanged += new System.EventHandler(this.day7_CheckedChanged);
             // 
             // oak
             // 
             this.oak.AutoSize = true;
+            this.oak.Checked = true;
             this.oak.Location = new System.Drawing.Point(13, 19);
             this.oak.Name = "oak";
             this.oak.Size = new System.Drawing.Size(45, 17);
@@ -182,6 +193,7 @@
             this.oak.TabStop = true;
             this.oak.Text = "Oak";
             this.oak.UseVisualStyleBackColor = true;
+            this.oak.CheckedChanged += new System.EventHandler(this.oak_CheckedChanged);
             // 
             // laminate
             // 
@@ -190,9 +202,9 @@
             this.laminate.Name = "laminate";
             this.laminate.Size = new System.Drawing.Size(68, 17);
             this.laminate.TabIndex = 6;
-            this.laminate.TabStop = true;
             this.laminate.Text = "Laminate";
             this.laminate.UseVisualStyleBackColor = true;
+            this.laminate.CheckedChanged += new System.EventHandler(this.laminate_CheckedChanged);
             // 
             // pine
             // 
@@ -201,9 +213,9 @@
             this.pine.Name = "pine";
             this.pine.Size = new System.Drawing.Size(46, 17);
             this.pine.TabIndex = 5;
-            this.pine.TabStop = true;
             this.pine.Text = "Pine";
             this.pine.UseVisualStyleBackColor = true;
+            this.pine.CheckedChanged += new System.EventHandler(this.pine_CheckedChanged);
             // 
             // Material
             // 
@@ -248,11 +260,41 @@
             this.label5.TabIndex = 16;
             this.label5.Text = "in";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(90, 313);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 13);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Price";
+            // 
+            // quoteBox
+            // 
+            this.quoteBox.Location = new System.Drawing.Point(132, 310);
+            this.quoteBox.Name = "quoteBox";
+            this.quoteBox.ReadOnly = true;
+            this.quoteBox.Size = new System.Drawing.Size(78, 20);
+            this.quoteBox.TabIndex = 18;
+            this.quoteBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(115, 356);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(84, 36);
+            this.button3.TabIndex = 19;
+            this.button3.Text = "Save quote";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(322, 404);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.quoteBox);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.Shipping);
@@ -298,6 +340,9 @@
         private System.Windows.Forms.GroupBox Shipping;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox quoteBox;
+        private System.Windows.Forms.Button button3;
     }
 }
 
