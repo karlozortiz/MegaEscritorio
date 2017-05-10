@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +14,6 @@ namespace MegaEscritorio
     public partial class Form1 : Form
     {
         Desktop mDesktop = new Desktop();
-
-        // Choose material  
-        private bool isOak = false;
-        private bool isPine = false;
-        private bool isLaminate = false;
-
         //Costs
         private float materialCost;
         private float m_Area;
@@ -32,11 +27,7 @@ namespace MegaEscritorio
         public const float BASE = 200;
         public const float COST_PER_DRAWER = 50;
 
-        //shipping 
-        private bool s_standard = false;
-        private bool days3 = false;
-        private bool days5 = false;
-        private bool days7 = false;
+        //shipping
         private float ShippingCost;
 
 
@@ -49,43 +40,9 @@ namespace MegaEscritorio
             else
                 surfaceCost = (m_Area - 1000) + BASE;
 
-            ShippingCost = ComputeShipping();
             Console.WriteLine("m_Area: {4}, surface cost:{0}, totalDrawers: {1}, materialCost: {2}, shipping:{3}"
                 , surfaceCost, totalDrawers, materialCost, ShippingCost, m_Area);
             quote = surfaceCost + COST_PER_DRAWER * totalDrawers + materialCost + ShippingCost;
-        }
-
-        public float ComputeShipping()
-        {
-            if (days3)
-            {
-                if (m_Area > 0 && m_Area <= 1000)
-                    return 60.0f;
-                else if (m_Area > 1000 && m_Area <= 1999)
-                    return 70.0f;
-                else
-                    return 80.0f;
-            }
-            else if (days5)
-            {
-                if (m_Area > 0 && m_Area <= 1000)
-                    return 40.0f;
-                else if (m_Area > 1000 && m_Area <= 1999)
-                    return 50.0f;
-                else
-                    return 60.0f;
-            }
-            else if (days7)
-            {
-                if (m_Area > 0 && m_Area <= 1000)
-                    return 30.0f;
-                else if (m_Area > 1000 && m_Area <= 1999)
-                    return 30.0f;
-                else
-                    return 40.0f;
-            }
-            else
-                return 0.0f;
         }
 
         public void PromptWidth()
@@ -177,39 +134,42 @@ namespace MegaEscritorio
         private void button1_Click(object sender, EventArgs e)
         {
             getQuote();
-            quoteBox.Text = quote.ToString();
+            quoteBox.Text = "$" + quote.ToString();
         }
 
         private void standard_CheckedChanged(object sender, EventArgs e)
         {
-            s_standard = true;
-            days3 = false;
-            days5 = false;
-            days7 = false;
+            ShippingCost = 0.0f;
         }
 
         private void day3_CheckedChanged(object sender, EventArgs e)
         {
-            s_standard = false;
-            days3 = true;
-            days5 = false;
-            days7 = false;
+            if (m_Area > 0 && m_Area <= 1000)
+                ShippingCost = 60.0f;
+            else if (m_Area > 1000 && m_Area <= 1999)
+                ShippingCost = 70.0f;
+            else
+                ShippingCost = 80.0f;
         }
 
         private void day5_CheckedChanged(object sender, EventArgs e)
         {
-            s_standard = false;
-            days3 = false;
-            days5 = true;
-            days7 = false;
+            if (m_Area > 0 && m_Area <= 1000)
+                ShippingCost = 40.0f;
+            else if (m_Area > 1000 && m_Area <= 1999)
+                ShippingCost = 50.0f;
+            else
+                ShippingCost = 60.0f;
         }
 
         private void day7_CheckedChanged(object sender, EventArgs e)
         {
-            s_standard = false;
-            days3 = false;
-            days5 = false;
-            days7 = true;
+            if (m_Area > 0 && m_Area <= 1000)
+                ShippingCost = 30.0f;
+            else if (m_Area > 1000 && m_Area <= 1999)
+                ShippingCost = 30.0f;
+            else
+                ShippingCost = 40.0f;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -219,9 +179,40 @@ namespace MegaEscritorio
             m_width.Text = "10";
             m_depth.Text = "10";
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (StreamWriter w = File.AppendText("log.txt"))
+            {
+                Log("Test1", w);
+                Log("Test2", w);
+            }
+
+            using (StreamReader r = File.OpenText("log.txt"))
+            {
+                DumpLog(r);
+            }
+        }
+
+        public static void Log(string logMessage, TextWriter w)
+        {
+            w.Write("\r\nLog Entry : ");
+            w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
+                DateTime.Now.ToLongDateString());
+            w.WriteLine("  :");
+            w.WriteLine("  :{0}", logMessage);
+            w.WriteLine("-------------------------------");
+        }
+
+        public static void DumpLog(StreamReader r)
+        {
+            string line;
+            while ((line = r.ReadLine()) != null)
+            {
+                Console.WriteLine(line);
+            }
+        }
     }
-
-
 
     public class Desktop
     {
