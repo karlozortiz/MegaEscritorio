@@ -50,6 +50,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.quoteBox = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.SeachByMaterial = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.search = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.drawers)).BeginInit();
             this.Material.SuspendLayout();
             this.Shipping.SuspendLayout();
@@ -79,17 +82,16 @@
             this.m_width.Name = "m_width";
             this.m_width.Size = new System.Drawing.Size(98, 20);
             this.m_width.TabIndex = 1;
-            this.m_width.Text = "10";
-            this.m_width.TextChanged += new System.EventHandler(this.ValidateWidth);
+            this.m_width.KeyDown += new System.Windows.Forms.KeyEventHandler(this.m_width_KeyDown);
             // 
             // m_depth
             // 
+            this.m_depth.Enabled = false;
             this.m_depth.Location = new System.Drawing.Point(132, 54);
             this.m_depth.Name = "m_depth";
             this.m_depth.Size = new System.Drawing.Size(98, 20);
             this.m_depth.TabIndex = 2;
-            this.m_depth.Text = "10";
-            this.m_depth.TextChanged += new System.EventHandler(this.ValidateDepth);
+            this.m_depth.KeyDown += new System.Windows.Forms.KeyEventHandler(this.m_depth_KeyDown);
             // 
             // label4
             // 
@@ -102,6 +104,7 @@
             // 
             // drawers
             // 
+            this.drawers.Enabled = false;
             this.drawers.Location = new System.Drawing.Point(164, 159);
             this.drawers.Maximum = new decimal(new int[] {
             7,
@@ -115,7 +118,8 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 356);
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(12, 421);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(84, 36);
             this.button1.TabIndex = 13;
@@ -125,7 +129,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(230, 356);
+            this.button2.Location = new System.Drawing.Point(230, 421);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(80, 36);
             this.button2.TabIndex = 14;
@@ -136,12 +140,10 @@
             // standard
             // 
             this.standard.AutoSize = true;
-            this.standard.Checked = true;
             this.standard.Location = new System.Drawing.Point(8, 29);
             this.standard.Name = "standard";
             this.standard.Size = new System.Drawing.Size(68, 17);
             this.standard.TabIndex = 9;
-            this.standard.TabStop = true;
             this.standard.Text = "Standard";
             this.standard.UseVisualStyleBackColor = true;
             this.standard.CheckedChanged += new System.EventHandler(this.standard_CheckedChanged);
@@ -153,7 +155,6 @@
             this.day3.Name = "day3";
             this.day3.Size = new System.Drawing.Size(56, 17);
             this.day3.TabIndex = 10;
-            this.day3.TabStop = true;
             this.day3.Text = "3 days";
             this.day3.UseVisualStyleBackColor = true;
             this.day3.CheckedChanged += new System.EventHandler(this.day3_CheckedChanged);
@@ -165,7 +166,6 @@
             this.day5.Name = "day5";
             this.day5.Size = new System.Drawing.Size(56, 17);
             this.day5.TabIndex = 12;
-            this.day5.TabStop = true;
             this.day5.Text = "5 days";
             this.day5.UseVisualStyleBackColor = true;
             this.day5.CheckedChanged += new System.EventHandler(this.day5_CheckedChanged);
@@ -177,7 +177,6 @@
             this.day7.Name = "day7";
             this.day7.Size = new System.Drawing.Size(56, 17);
             this.day7.TabIndex = 11;
-            this.day7.TabStop = true;
             this.day7.Text = "7 days";
             this.day7.UseVisualStyleBackColor = true;
             this.day7.CheckedChanged += new System.EventHandler(this.day7_CheckedChanged);
@@ -185,12 +184,10 @@
             // oak
             // 
             this.oak.AutoSize = true;
-            this.oak.Checked = true;
             this.oak.Location = new System.Drawing.Point(13, 19);
             this.oak.Name = "oak";
             this.oak.Size = new System.Drawing.Size(45, 17);
             this.oak.TabIndex = 4;
-            this.oak.TabStop = true;
             this.oak.Text = "Oak";
             this.oak.UseVisualStyleBackColor = true;
             this.oak.CheckedChanged += new System.EventHandler(this.oak_CheckedChanged);
@@ -280,7 +277,8 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(115, 356);
+            this.button3.Enabled = false;
+            this.button3.Location = new System.Drawing.Point(120, 421);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(84, 36);
             this.button3.TabIndex = 19;
@@ -288,11 +286,46 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // SeachByMaterial
+            // 
+            this.SeachByMaterial.FormattingEnabled = true;
+            this.SeachByMaterial.Items.AddRange(new object[] {
+            "Oak",
+            "Pine",
+            "Laminate"});
+            this.SeachByMaterial.Location = new System.Drawing.Point(132, 353);
+            this.SeachByMaterial.Name = "SeachByMaterial";
+            this.SeachByMaterial.Size = new System.Drawing.Size(78, 21);
+            this.SeachByMaterial.TabIndex = 20;
+            this.SeachByMaterial.SelectedIndexChanged += new System.EventHandler(this.SeachByMaterial_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(27, 356);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(94, 13);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Search by material";
+            // 
+            // search
+            // 
+            this.search.Location = new System.Drawing.Point(230, 344);
+            this.search.Name = "search";
+            this.search.Size = new System.Drawing.Size(80, 36);
+            this.search.TabIndex = 22;
+            this.search.Text = "Search";
+            this.search.UseVisualStyleBackColor = true;
+            this.search.Click += new System.EventHandler(this.search_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(322, 404);
+            this.ClientSize = new System.Drawing.Size(322, 469);
+            this.Controls.Add(this.search);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.SeachByMaterial);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.quoteBox);
             this.Controls.Add(this.label6);
@@ -344,6 +377,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox quoteBox;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ComboBox SeachByMaterial;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button search;
     }
 }
 
