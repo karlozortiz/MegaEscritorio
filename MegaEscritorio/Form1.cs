@@ -239,7 +239,7 @@ namespace MegaEscritorio
                     DateTime.Now.ToLongDateString());
                 w.WriteLine("Width (in): {0}\t\t\tDepth (in): {1}\t\t\tShipping days: {2}",
                     mDesktop.GetWidth(), mDesktop.GetDepth(), days);
-                w.WriteLine("# of drawers: {0}\t\t Material: {1}\t\t\tShipping cost: {2}", 
+                w.WriteLine("# of drawers: {0}\t\t\t Material: {1}\t\t\tShipping cost: {2}", 
                     totalDrawers, deskMaterial,ShippingCost);
                 w.WriteLine("\t\t\t\nQuote: ${0:#,###,##0.00}", quote);
                 w.WriteLine("----------------------------------------------");
