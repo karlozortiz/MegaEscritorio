@@ -226,7 +226,7 @@ namespace MegaEscritorio
             {
                 w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
                     DateTime.Now.ToLongDateString());
-                w.WriteLine("\t\t\tCustomer name: " + Name.Text);
+                w.WriteLine("\t\t\tCustomer name: " + Name.Text.ToString());
                 w.WriteLine("Width (in): {0}\t\t\tDepth (in): {1}\t\t\tShipping days: {2}",
                     mDesktop.GetWidth(), mDesktop.GetDepth(), days);
                 w.WriteLine("# of drawers: {0}\t\t\tMaterial: {1}\t\t\tShipping cost: {2}", 
