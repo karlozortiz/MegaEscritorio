@@ -32,6 +32,7 @@ namespace MegaEscritorio
         private int days;
         private string deskMaterial;
         private string selectedItem = "";
+        private string name;
 
         static float PromptMeasurement(TextBox dimention, string x)
         {
@@ -216,6 +217,7 @@ namespace MegaEscritorio
             day5.Checked = false;
             day7.Checked = false;
             selectedItem = "";
+            NameCustomer.Clear();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -226,7 +228,7 @@ namespace MegaEscritorio
             {
                 w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
                     DateTime.Now.ToLongDateString());
-                w.WriteLine("\t\t\tCustomer name: " + Name.Text.ToString());
+                w.WriteLine("\t\t\tCustomer name: " + name);
                 w.WriteLine("Width (in): {0}\t\t\tDepth (in): {1}\t\t\tShipping days: {2}",
                     mDesktop.GetWidth(), mDesktop.GetDepth(), days);
                 w.WriteLine("# of drawers: {0}\t\t\tMaterial: {1}\t\t\tShipping cost: {2}", 
@@ -299,6 +301,11 @@ namespace MegaEscritorio
                 }
                 w.WriteLine("----------------------------------------------");
             }
+        }
+
+        private void NameCustomer_TextChanged(object sender, EventArgs e)
+        {
+            name = NameCustomer.Text.ToString();
         }
     }
 
