@@ -33,12 +33,64 @@ namespace MegaEscritorio
         private string deskMaterial;
         private string selectedItem = "";
 
+        static float PromptMeasurement(TextBox dimention, string x)
+        {
+            float length = 0.0f;
+            do
+            {
+                string lengthString = dimention.Text.ToString();
+                Console.WriteLine(lengthString);
+                try
+                {
+                    length = float.Parse(lengthString);
+                    if (length <= 0.0f)
+                    {
+                        MessageBox.Show(x + " should be bigger than zero. Setting " +
+                            x + " to 100 in", "Wrong Data!");
+                        dimention.Text = "100";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Wrong Data!");
+                    MessageBox.Show(x + " should be bigger than zero. Setting " +
+                            x + " to 100 in", "Wrong Data!");
+                    dimention.Text = "100";
+                }
+
+            } while (length <= 0.0f);
+            return length;
+        }
+
+        private void m_width_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
+            {
+                float input_width = PromptMeasurement(m_width, "Width");
+                mDesktop.SetWidth(input_width);
+                m_depth.Enabled = true;                
+            }
+        }
+
+        private void m_depth_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
+            {
+                float input_depth = PromptMeasurement(m_depth, "Depth");
+                mDesktop.SetDepth(input_depth);
+                drawers.Enabled = true;
+            }
+        }
+
         public void getQuote()
         {
             // Get Area
             m_Area = mDesktop.CalculateArea();
             surfaceCost = computeSurfaceCost(m_Area);
             quote = calculateTotalPrice();
+            Console.WriteLine("m_Area: {4}, surface cost:{0}, totalDrawers: {1}, materialCost: {2}, shipping:{3}",
+                + surfaceCost, totalDrawers, materialCost, ShippingCost, m_Area);
+            selectedItem = "";
         }
 
         public float calculateTotalPrice()
@@ -55,74 +107,6 @@ namespace MegaEscritorio
             }
             button3.Enabled = true;
             return surfaceCost + COST_PER_DRAWER * totalDrawers + materialCost + ShippingCost;
-        }
-
-        public void PromptWidth()
-        {
-            float width = (0.001f);
-            try
-            {
-                width = float.Parse(m_width.Text.ToString());
-            }
-            catch (Exception ex)
-            {
-                width = (0.00f);
-                MessageBox.Show(ex.Message, "Wrong Data!");
-            }
-            finally
-            {
-                mDesktop.SetWidth(width);
-            }
-            Console.WriteLine("Width: {0}", width);
-        }
-
-        private void m_width_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
-            {
-                do
-                {
-                    PromptWidth();
-                    if (mDesktop.GetWidth() > 0.0f)
-                    {
-                        m_depth.Enabled = true;
-                    }
-                } while (mDesktop.GetWidth() == 0.001f);
-            }
-        }
-
-        public void PromptDepth()
-        {
-            float depth = (0.001f);
-            try
-            {
-                depth = float.Parse(m_depth.Text.ToString());
-            }
-            catch (Exception ex)
-            {
-                depth = (0.00f);
-                MessageBox.Show(ex.Message, "Wrong Data!");
-            }
-            finally
-            {
-                mDesktop.SetDepth(depth);
-            }
-            Console.WriteLine("Depth: {0}", depth);
-        }
-
-        private void m_depth_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
-            {
-                do
-                {
-                    PromptDepth();
-                    if (mDesktop.GetDepth() > 0.0f)
-                    {
-                        drawers.Enabled = true;
-                    }
-                } while (mDesktop.GetDepth() == 0.001f);
-            }
         }
 
         public float computeSurfaceCost(float area)
@@ -216,10 +200,14 @@ namespace MegaEscritorio
             drawers.Value = 0;
             m_width.Clear();
             m_depth.Clear();
+            mDesktop.SetWidth(0.0f);
+            mDesktop.SetDepth(0.0f);
             m_depth.Enabled = false;
             drawers.Enabled = false;
             button1.Enabled = false;
             button3.Enabled = false;
+            materialCost = 0.0f;
+            ShippingCost = 1;
             oak.Checked = false;
             laminate.Checked = false;
             pine.Checked = false;
@@ -227,6 +215,7 @@ namespace MegaEscritorio
             day3.Checked = false;
             day5.Checked = false;
             day7.Checked = false;
+            selectedItem = "";
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -237,9 +226,10 @@ namespace MegaEscritorio
             {
                 w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
                     DateTime.Now.ToLongDateString());
+                w.WriteLine("\t\t\tCustomer name: " + Name.Text);
                 w.WriteLine("Width (in): {0}\t\t\tDepth (in): {1}\t\t\tShipping days: {2}",
                     mDesktop.GetWidth(), mDesktop.GetDepth(), days);
-                w.WriteLine("# of drawers: {0}\t\t\t Material: {1}\t\t\tShipping cost: {2}", 
+                w.WriteLine("# of drawers: {0}\t\t\tMaterial: {1}\t\t\tShipping cost: {2}", 
                     totalDrawers, deskMaterial,ShippingCost);
                 w.WriteLine("\t\t\t\nQuote: ${0:#,###,##0.00}", quote);
                 w.WriteLine("----------------------------------------------");
@@ -330,7 +320,7 @@ namespace MegaEscritorio
         public void SetWidth(float width)
         {          
             if (width <= 0)
-                MessageBox.Show("Width should be bigger than zero", "Wrong Data!");
+                Console.WriteLine("Width should be bigger than zero", "Wrong Data!");
             else
                 this.width = width;
         }
@@ -338,7 +328,7 @@ namespace MegaEscritorio
         public void SetDepth(float depth)
         {
             if (depth <= 0)
-                MessageBox.Show("Depth should be bigger than zero", "Wrong Data!");
+                Console.WriteLine("Depth should be bigger than zero", "Wrong Data!");
             else
                 this.depth = depth;
         }
