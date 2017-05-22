@@ -11,19 +11,23 @@ using System.Windows.Forms;
 
 namespace MegaEscritorio
 {
-    
+
+
+    /*****************************************************
+     *  Interface: This interface will hold two functions that any other 
+     *  SW should have Area & TotalPrice
+     * ***************************************************/
     public interface IDesk
     {
         float CalculateArea();
-        float calculateTotalPrice();
+        float CalculateTotalPrice();
     }
 
     public partial class Form1 : Form, IDesk
     {
         Desktop mDesktop = new Desktop();
         //Costs
-        private float materialCost = 0.0f;
-        private float m_Area;
+        private float materialCost =0.0f;
         private float quote;
 
         //Number of drawers
@@ -40,6 +44,49 @@ namespace MegaEscritorio
         private string deskMaterial;
         private string selectedItem = "";
         private string name;
+
+
+        enum MaterialType { Cherry, Glass, Laminate, Oak, Pine, Walnut };
+        private MaterialType material;
+
+        public string getMaterial()
+        {
+            return Convert.ToString(material);
+        }
+
+        public void setMaterial(string material)
+        {
+            switch (material)
+            {
+                case "Cherry":
+                    this.material = MaterialType.Cherry;
+                    materialCost = 250.0f;
+                    break;
+                case "Glass":
+                    this.material = MaterialType.Glass;
+                    materialCost = 300.0f;
+                    break;
+                case "Laminate":
+                    this.material = MaterialType.Laminate;
+                    materialCost = 100.0f;
+                    break;
+                case "Oak":
+                    this.material = MaterialType.Oak;
+                    materialCost = 200.0f;
+                    break;
+                case "Pine":
+                    this.material = MaterialType.Pine;
+                    materialCost = 50.0f;
+                    break;
+                case "Walnut":
+                    this.material = MaterialType.Walnut;
+                    materialCost = 350.0f;
+                    break;
+                default:
+                    Console.Out.WriteLine("\nThis should never happen\n");
+                    break;
+            }
+        }
 
         /*****************************************************
          *  PromptMeasument will validate the input with the following
@@ -105,8 +152,11 @@ namespace MegaEscritorio
             }
         }
 
-        
-        public float calculateTotalPrice()
+        /*****************************************************
+         *  CalculateTotalPrice(): Definition of the Interface
+         * 
+         * ***************************************************/
+        public float CalculateTotalPrice()
         {
             if (materialCost == 0.0)
             {
@@ -140,42 +190,6 @@ namespace MegaEscritorio
             InitializeComponent();
         }
 
-        private void oak_CheckedChanged(object sender, EventArgs e)
-        {
-            deskMaterial = "Oak";
-            materialCost = 200.0f;           
-        }
-
-        private void pine_CheckedChanged(object sender, EventArgs e)
-        {
-            materialCost = 50.0f;
-            deskMaterial = "Pine";
-        }
-
-        private void laminate_CheckedChanged(object sender, EventArgs e)
-        {
-            materialCost = 100.0f;
-            deskMaterial = "Laminate";
-        }
-
-        private void Cherry_CheckedChanged(object sender, EventArgs e)
-        {
-            materialCost = 250.0f;
-            deskMaterial = "Cherry";
-        }
-
-        private void Glass_CheckedChanged(object sender, EventArgs e)
-        {
-            materialCost = 200.0f;
-            deskMaterial = "Glass";
-        }
-
-        private void Walnut_CheckedChanged(object sender, EventArgs e)
-        {
-            materialCost = 300.0f;
-            deskMaterial = "Walnut";
-        }
-
         private void drawers_ValueChanged(object sender, EventArgs e)
         {
             totalDrawers = (float)drawers.Value;
@@ -198,9 +212,9 @@ namespace MegaEscritorio
         {
             days = 3;
 
-            if (m_Area > 0 && m_Area <= 1000)
+            if (CalculateArea() > 0 && CalculateArea() <= 1000)
                 ShippingCost = 60.0f;
-            else if (m_Area > 1000 && m_Area <= 1999)
+            else if (CalculateArea() > 1000 && CalculateArea() <= 1999)
                 ShippingCost = 70.0f;
             else
                 ShippingCost = 80.0f;
@@ -210,9 +224,9 @@ namespace MegaEscritorio
         {
             days = 5;
 
-            if (m_Area > 0 && m_Area <= 1000)
+            if (CalculateArea() > 0 && CalculateArea() <= 1000)
                 ShippingCost = 40.0f;
-            else if (m_Area > 1000 && m_Area <= 1999)
+            else if (CalculateArea() > 1000 && CalculateArea() <= 1999)
                 ShippingCost = 50.0f;
             else
                 ShippingCost = 60.0f;
@@ -222,9 +236,9 @@ namespace MegaEscritorio
         {
             days = 7;
 
-            if (m_Area > 0 && m_Area <= 1000)
+            if (CalculateArea() > 0 && CalculateArea() <= 1000)
                 ShippingCost = 30.0f;
-            else if (m_Area > 1000 && m_Area <= 1999)
+            else if (CalculateArea() > 1000 && CalculateArea() <= 1999)
                 ShippingCost = 30.0f;
             else
                 ShippingCost = 40.0f;
@@ -248,7 +262,8 @@ namespace MegaEscritorio
             day3.Checked = false;
             day5.Checked = false;
             day7.Checked = false;
-            selectedItem = "";
+            comboBox1.Items.Clear();
+            SeachByMaterial.Items.Clear();
             NameCustomer.Clear();
         }
 
@@ -256,18 +271,19 @@ namespace MegaEscritorio
         {
             // Save quote to a File
             AddToList();
-            using (StreamWriter w = File.AppendText("quotes history.txt"))
-            {
-                w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
-                    DateTime.Now.ToLongDateString());
-                w.WriteLine("\t\t\tCustomer name: " + name);
-                w.WriteLine("Width (in): {0}\t\t\tDepth (in): {1}\t\t\tShipping days: {2}",
-                    mDesktop.GetWidth(), mDesktop.GetDepth(), days);
-                w.WriteLine("# of drawers: {0}\t\t\tMaterial: {1}\t\t\tShipping cost: {2}", 
-                    totalDrawers, deskMaterial,ShippingCost);
-                w.WriteLine("\t\t\t\nQuote: ${0:#,###,##0.00}", quote);
-                w.WriteLine("----------------------------------------------");
-            }
+            // Create a Dictionary to store the order information
+            Dictionary<string, string> orderDetails = new Dictionary<string, string>();
+            orderDetails.Add("Width", Convert.ToString(mDesktop.GetWidth()));
+            orderDetails.Add("Depth", Convert.ToString(mDesktop.GetDepth()));
+            orderDetails.Add("Material", getMaterial());
+            orderDetails.Add("Area", Convert.ToString(CalculateArea()));
+
+            // Using the third party library JSON.Net serialize the Dictionary into a string with json formatting
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(orderDetails);
+
+            // Append the text file to the json.txt file
+            File.AppendAllText("json.txt", "\n");
+            File.AppendAllText("json.txt", json);
             button3.Enabled = false;
         }
 
@@ -341,13 +357,19 @@ namespace MegaEscritorio
             name = NameCustomer.Text.ToString();
             // Get Area
             CalculateArea();
-            surfaceCost = computeSurfaceCost(m_Area);
-            quote = calculateTotalPrice();
+            surfaceCost = computeSurfaceCost(CalculateArea());
+            quote = CalculateTotalPrice();
             Console.WriteLine("m_Area: {4}, surface cost:{0}, totalDrawers: {1}, materialCost: {2}, shipping:{3}",
-                +surfaceCost, totalDrawers, materialCost, ShippingCost, m_Area);
-            selectedItem = "";
+                +surfaceCost, totalDrawers, materialCost, ShippingCost, CalculateArea());
+            selectedItem = "Select one";
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Object selectedText = comboBox1.SelectedItem;
+            deskMaterial = selectedText.ToString();
+            setMaterial(deskMaterial);
+        }
     }
 
     public class Desktop
@@ -382,3 +404,5 @@ namespace MegaEscritorio
         }
     }
 }
+
+

@@ -299,6 +299,7 @@
             this.comboBox1.Size = new System.Drawing.Size(96, 21);
             this.comboBox1.TabIndex = 4;
             this.comboBox1.Text = "Select one";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label9
             // 
