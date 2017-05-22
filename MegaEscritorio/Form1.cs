@@ -23,6 +23,46 @@ namespace MegaEscritorio
         float CalculateTotalPrice();
     }
 
+    /*****************************************************
+    *  Class Desktop: This clss will hold two variables:{width, depth}
+    *  and setters and getters
+    * ***************************************************/
+    public class Desktop
+    {
+        private float width;
+        private float depth;
+
+        public float GetWidth()
+        {
+            return width;
+        }
+
+        public float GetDepth()
+        {
+            return depth;
+        }
+
+        public void SetWidth(float width)
+        {
+            if (width <= 0)
+                Console.WriteLine("Width should be bigger than zero", "Wrong Data!");
+            else
+                this.width = width;
+        }
+
+        public void SetDepth(float depth)
+        {
+            if (depth <= 0)
+                Console.WriteLine("Depth should be bigger than zero", "Wrong Data!");
+            else
+                this.depth = depth;
+        }
+    }
+
+    /*****************************************************
+     *  This class will expand the interface IDesk and created
+     *  an instance of the class Desktop
+     * ***************************************************/
     public partial class Form1 : Form, IDesk
     {
         Desktop mDesktop = new Desktop();
@@ -172,6 +212,10 @@ namespace MegaEscritorio
             return surfaceCost + COST_PER_DRAWER * totalDrawers + materialCost + ShippingCost;
         }
 
+        /*****************************************************
+         *  ComputeSurfaceCost will calculate the cost base on the
+         *  area
+         * ***************************************************/
         public float computeSurfaceCost(float area)
         {
             if ( area <= 1000)
@@ -180,6 +224,10 @@ namespace MegaEscritorio
                 return (area - 1000) + BASE;
         }
 
+        /*****************************************************
+         *  This is the implementation of the Interface.
+         *  Calculate area base on the width and depth
+         * ***************************************************/
         public float CalculateArea()
         {
             return mDesktop.GetWidth() * mDesktop.GetDepth();
@@ -190,12 +238,20 @@ namespace MegaEscritorio
             InitializeComponent();
         }
 
+        /*****************************************************
+         *  Select the number of Drawers
+         *  
+         * ***************************************************/
         private void drawers_ValueChanged(object sender, EventArgs e)
         {
             totalDrawers = (float)drawers.Value;
             button1.Enabled = true;
         }
 
+        /*****************************************************
+         *  This function will output the total price
+         *  
+         * ***************************************************/
         private void button1_Click(object sender, EventArgs e)
         {
             getQuote();
@@ -293,6 +349,10 @@ namespace MegaEscritorio
             selectedItem = selectedText.ToString();
         }
 
+        /*****************************************************
+         *  This function will search quotes based on the material
+         *  selected. 
+         * ***************************************************/
         private void search_Click(object sender, EventArgs e)
         {
             if (selectedItem.CompareTo("") == 0)
@@ -372,37 +432,7 @@ namespace MegaEscritorio
         }
     }
 
-    public class Desktop
-    {
-        private float width;
-        private float depth;
-
-        public float GetWidth()
-        {
-            return width;
-        }
-
-        public float GetDepth()
-        {
-            return depth;
-        }
-
-        public void SetWidth(float width)
-        {          
-            if (width <= 0)
-                Console.WriteLine("Width should be bigger than zero", "Wrong Data!");
-            else
-                this.width = width;
-        }
-
-        public void SetDepth(float depth)
-        {
-            if (depth <= 0)
-                Console.WriteLine("Depth should be bigger than zero", "Wrong Data!");
-            else
-                this.depth = depth;
-        }
-    }
+    
 }
 
 
