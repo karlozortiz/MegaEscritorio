@@ -262,8 +262,8 @@ namespace MegaEscritorio
             day3.Checked = false;
             day5.Checked = false;
             day7.Checked = false;
-            comboBox1.Items.Clear();
-            SeachByMaterial.Items.Clear();
+            comboBox1.Text = "Select one";
+            SeachByMaterial.Text = "Select one";
             NameCustomer.Clear();
         }
 
