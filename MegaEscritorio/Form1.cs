@@ -11,7 +11,14 @@ using System.Windows.Forms;
 
 namespace MegaEscritorio
 {
-    public partial class Form1 : Form
+    
+    public interface IDesk
+    {
+        float CalculateArea();
+        float calculateTotalPrice();
+    }
+
+    public partial class Form1 : Form, IDesk
     {
         Desktop mDesktop = new Desktop();
         //Costs
@@ -34,6 +41,13 @@ namespace MegaEscritorio
         private string selectedItem = "";
         private string name;
 
+        /*****************************************************
+         *  PromptMeasument will validate the input with the following
+         * constrains:
+         * -Only numbers bigger than zero
+         * -No letter/symbols
+         * If any of this is found, the value will change to 100 automatically.
+         * ***************************************************/
         static float PromptMeasurement(TextBox dimention, string x)
         {
             float length = 0.0f;
@@ -63,6 +77,10 @@ namespace MegaEscritorio
             return length;
         }
 
+        /*****************************************************
+         *  Key event. This function will verify the input of the width box
+         * 
+         * ***************************************************/
         private void m_width_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
@@ -73,6 +91,10 @@ namespace MegaEscritorio
             }
         }
 
+        /*****************************************************
+         *  Key event. This function will verify the input of the  box
+         * 
+         * ***************************************************/
         private void m_depth_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
@@ -83,17 +105,7 @@ namespace MegaEscritorio
             }
         }
 
-        public void getQuote()
-        {
-            // Get Area
-            m_Area = mDesktop.CalculateArea();
-            surfaceCost = computeSurfaceCost(m_Area);
-            quote = calculateTotalPrice();
-            Console.WriteLine("m_Area: {4}, surface cost:{0}, totalDrawers: {1}, materialCost: {2}, shipping:{3}",
-                + surfaceCost, totalDrawers, materialCost, ShippingCost, m_Area);
-            selectedItem = "";
-        }
-
+        
         public float calculateTotalPrice()
         {
             if (materialCost == 0.0)
@@ -118,6 +130,11 @@ namespace MegaEscritorio
                 return (area - 1000) + BASE;
         }
 
+        public float CalculateArea()
+        {
+            return mDesktop.GetWidth() * mDesktop.GetDepth();
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -139,6 +156,24 @@ namespace MegaEscritorio
         {
             materialCost = 100.0f;
             deskMaterial = "Laminate";
+        }
+
+        private void Cherry_CheckedChanged(object sender, EventArgs e)
+        {
+            materialCost = 250.0f;
+            deskMaterial = "Cherry";
+        }
+
+        private void Glass_CheckedChanged(object sender, EventArgs e)
+        {
+            materialCost = 200.0f;
+            deskMaterial = "Glass";
+        }
+
+        private void Walnut_CheckedChanged(object sender, EventArgs e)
+        {
+            materialCost = 300.0f;
+            deskMaterial = "Walnut";
         }
 
         private void drawers_ValueChanged(object sender, EventArgs e)
@@ -209,9 +244,6 @@ namespace MegaEscritorio
             button3.Enabled = false;
             materialCost = 0.0f;
             ShippingCost = 1;
-            oak.Checked = false;
-            laminate.Checked = false;
-            pine.Checked = false;
             standard.Checked = false;
             day3.Checked = false;
             day5.Checked = false;
@@ -303,10 +335,19 @@ namespace MegaEscritorio
             }
         }
 
-        private void NameCustomer_TextChanged(object sender, EventArgs e)
+        public void getQuote()
         {
+            // Get Customer info
             name = NameCustomer.Text.ToString();
+            // Get Area
+            CalculateArea();
+            surfaceCost = computeSurfaceCost(m_Area);
+            quote = calculateTotalPrice();
+            Console.WriteLine("m_Area: {4}, surface cost:{0}, totalDrawers: {1}, materialCost: {2}, shipping:{3}",
+                +surfaceCost, totalDrawers, materialCost, ShippingCost, m_Area);
+            selectedItem = "";
         }
+
     }
 
     public class Desktop
@@ -338,17 +379,6 @@ namespace MegaEscritorio
                 Console.WriteLine("Depth should be bigger than zero", "Wrong Data!");
             else
                 this.depth = depth;
-        }
-
-        public float CalculateArea()
-        {
-            if (GetDepth() * GetWidth() <= 0.0f)
-            {
-                MessageBox.Show("Depth/Width should be bigger than zero", "Wrong Data!");
-                return 0.0f;
-            }
-            else
-                return GetDepth() * GetWidth();
         }
     }
 }
